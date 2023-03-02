@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { signin, signout } from '../app/slice/userSlice'
-import { auth, onAuthStateChanged } from './api/firebase';
+import { signin, signout, selectUser } from '../app/slice/userSlice'
+import { persistor } from '../app/store'
+import { useAppSelector } from '../app/hooks';
+import { auth, onAuthStateChanged, signOut } from './api/firebase'
 import styles from '../styles/Home.module.css'
 import LandingPage from '../components/LandingPage'
 import HowToUse from '../components/HowToUse'
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<string>('')
+
+  const user = useAppSelector(selectUser)
 
   const router = useRouter()
   const dispatch = useDispatch()
@@ -38,6 +42,11 @@ export default function Home() {
     router.push('/')
   }
 
+  const signoutClickHandler = () => {
+    signOut(auth)
+    persistor.purge()
+  }
+
   const signinClickHandler = () => {
     router.push('/signin')
   }
@@ -52,8 +61,14 @@ export default function Home() {
         <span onClick={howToUseClickHandler}>사용법</span>
         <span onClick={orderPageClickHandler}>주문 페이지</span>
         <span onClick={adminPageClickHandler}>관리자 페이지</span>
-        <span onClick={signinClickHandler}>로그인</span>
-        <span onClick={signupClickHandler}>회원가입</span>
+        {user ? 
+          <span onClick={signoutClickHandler}>로그아웃</span> 
+          :
+          <span>
+            <span onClick={signinClickHandler}>로그인</span>
+            <span onClick={signupClickHandler}>회원가입</span>
+          </span>
+        }
       </div>
       {currentPage ? <HowToUse /> : <LandingPage /> }
     </div>
