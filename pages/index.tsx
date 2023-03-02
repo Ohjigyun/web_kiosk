@@ -1,5 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { signin, signout } from '../app/slice/userSlice'
+import { auth, onAuthStateChanged } from './api/firebase';
 import styles from '../styles/Home.module.css'
 import LandingPage from '../components/LandingPage'
 import HowToUse from '../components/HowToUse'
@@ -8,6 +11,20 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState<string>('')
 
   const router = useRouter()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        user.getIdTokenResult(false).then((idTokenResult) => {
+          dispatch(signin(idTokenResult))
+        })
+        return
+      }
+
+      dispatch(signout())
+    })
+  },[])
 
   const howToUseClickHandler = () => {
     setCurrentPage('howToUse')
