@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { auth } from './api/firebase'
 import { signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth'
+import { useAppSelector } from '../app/hooks'
+import { selectUser } from '../app/slice/userSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
 import styles from '../styles/Signin.module.css'
 
 export default function Signin() {
     const router = useRouter()
+
+    const user = useAppSelector(selectUser)
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -77,6 +81,12 @@ export default function Signin() {
           // ...
         });
     }
+
+    useEffect(() => {
+        if(user) {
+            router.push('/')
+        }
+      }, [user])
 
     return (
         <div className={styles.container}>

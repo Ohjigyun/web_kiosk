@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { auth } from './api/firebase'
 import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth'
+import { useAppSelector } from '../app/hooks'
+import { selectUser } from '../app/slice/userSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
 import styles from '../styles/Signup.module.css'
 
 export default function Signup() {
     const router = useRouter()
+
+    const user = useAppSelector(selectUser)
     
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -86,6 +90,12 @@ export default function Signup() {
           // ...
         });
     }
+
+    useEffect(() => {
+        if(user) {
+            router.push('/')
+        }
+      }, [user])
 
     useEffect(() => {
         const regexForEmailCheck = /^[a-z0-9@\.]{5,25}$/
