@@ -12,6 +12,7 @@ import {
 } from 'redux-persist';
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import userReducer from './slice/userSlice';
+import { apiSlice } from './slice/apiSlice';
 
 const createNoopStorage = () => {
   return {
@@ -41,6 +42,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -52,7 +54,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       }
-    })
+    }).concat(apiSlice.middleware)
 });
 export const persistor = persistStore(store)
 
