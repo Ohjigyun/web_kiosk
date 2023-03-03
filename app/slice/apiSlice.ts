@@ -12,7 +12,7 @@ export const apiSlice = createApi({
     signupUser: builder.mutation({
       query: (body) => ({
         url: `/user/signup-user`,
-        method: 'PUT',
+        method: 'POST',
         body
       }),
     }),
