@@ -6,3 +6,21 @@ export interface UserParams {
   user_email: string,
   user_id: string
 }
+
+export interface Product {
+  menu_image: any
+  menu_name: string
+  menu_price: number
+  menu_description: string
+}
+
+export type menuList = Product[]
+
+export interface Menu {
+  [key: string]: menuList
+}
+
+export interface MenuResponse {
+  user_id: string,
+  menu: Menu
+}

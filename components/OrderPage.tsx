@@ -1,9 +1,7 @@
-
-
-interface OrderPageProps {
-  orderTableNumber: string;
-}
-
-export default function OrderPage( props: OrderPageProps ){
-  return "OrderPage"
+export default function OrderPage(){
+  return (
+    <div>
+      OrderPage
+    </div>
+  )
 }
