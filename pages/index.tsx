@@ -36,7 +36,11 @@ export default function Home() {
   }
 
   const adminPageClickHandler = () => {
-    router.push('/')
+    if(!user) {
+      return
+    }
+    
+    router.push(`/admin/${user?.claims.user_id}`)
   }
 
   const signoutClickHandler = () => {

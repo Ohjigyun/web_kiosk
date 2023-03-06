@@ -9,6 +9,12 @@ export const apiSlice = createApi({
   // The "endpoints" represent operations and requests for this server
   endpoints: builder => ({
     // The `getPosts` endpoint is a "query" operation that returns data
+    getUserInfo: builder.query({
+      query: (args) => {
+        console.log(args)
+        return `/user/get-user-info?user_id=${args.uid}`
+      }
+    }),
     signupUser: builder.mutation({
       query: (body) => ({
         url: `/user/signup-user`,
@@ -18,4 +24,4 @@ export const apiSlice = createApi({
     }),
   })
 })
-  export const { useSignupUserMutation } = apiSlice
+  export const { useGetUserInfoQuery, useSignupUserMutation } = apiSlice
