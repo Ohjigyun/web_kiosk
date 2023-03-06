@@ -26,6 +26,9 @@ export default function AdminPage(){
     }
 
     if(!data) {
+      if(isLoading) {
+        return
+      }
       router.push('/')
       return
     }

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { auth } from './api/firebase'
 import { signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useAppSelector } from '../app/hooks'
+import { useSignupUserMutation } from '../app/slice/apiSlice'
 import { selectUser } from '../app/slice/userSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -15,6 +16,8 @@ export default function Signin() {
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+
+    const [signupUser, { isLoading }] = useSignupUserMutation()
 
     const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -34,12 +37,17 @@ export default function Signin() {
         const provider = new GoogleAuthProvider()
 
         signInWithPopup(auth, provider)
-            .then((result) => {
+            .then(async (result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential?.accessToken;
             // The signed-in user info.
             const user = result.user;
+            const userParams = {
+                user_id: user.uid,
+                user_email: user.email
+            }
+            await signupUser(userParams)
             // IdP data available using getAdditionalUserInfo(result)
             // ...
             router.push('/')
@@ -60,13 +68,18 @@ export default function Signin() {
         const provider = new GithubAuthProvider()
 
         signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(async (result) => {
           // This gives you a GitHub Access Token. You can use it to access the GitHub API.
           const credential = GithubAuthProvider.credentialFromResult(result);
           const token = credential?.accessToken;
       
           // The signed-in user info.
           const user = result.user;
+          const userParams = {
+            user_id: user.uid,
+            user_email: user.email
+        }
+        await signupUser(userParams)
           // IdP data available using getAdditionalUserInfo(result)
           // ...
           router.push('/')
