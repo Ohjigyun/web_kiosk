@@ -15,6 +15,18 @@ export const apiSlice = createApi({
         return `/user/get-user-info?user_id=${args.uid}`
       }
     }),
+    getMenu: builder.query({
+      query: (args) => {
+        console.log(args)
+        return `/menu/get-menu?user_id=${args.uid}`
+      }
+    }),
+    getPresignedUrl: builder.query({
+      query: (args) => {
+        const { user_id, category, menu_name } = args
+        return `/menu/get-presigned-url?user_id=${user_id}&category=${category}&menu_name=${menu_name}`
+      }
+    }),
     signupUser: builder.mutation({
       query: (body) => ({
         url: `/user/signup-user`,
@@ -24,4 +36,5 @@ export const apiSlice = createApi({
     }),
   })
 })
-  export const { useGetUserInfoQuery, useSignupUserMutation } = apiSlice
+
+export const { useGetUserInfoQuery, useGetMenuQuery, useLazyGetPresignedUrlQuery, useSignupUserMutation } = apiSlice

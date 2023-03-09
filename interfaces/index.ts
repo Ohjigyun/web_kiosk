@@ -22,5 +22,15 @@ export interface Menu {
 
 export interface MenuResponse {
   user_id: string,
-  menu: Menu
+  menu: Menu | {}
+}
+
+export interface ModalProps {
+  user_id: string,
+  category: string
+}
+
+export interface UrlResponse {
+  data?: string
+  error?: any;
 }
