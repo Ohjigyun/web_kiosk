@@ -4,6 +4,12 @@
   height: 100vh;
 }
 
+.afterLoadingContainer {
+  display: flex;
+  width: 100wh;
+  height: 100vh;
+}
+
 .categoryHeader {
   display: flex;
   justify-content: flex-end;

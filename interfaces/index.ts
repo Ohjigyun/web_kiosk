@@ -8,16 +8,20 @@ export interface UserParams {
 }
 
 export interface Product {
-  menu_image: any
+  image_key: any
   menu_name: string
   menu_price: number
   menu_description: string
 }
 
-export type menuList = Product[]
+export type MenuList = Product[]
+
+export type Entries = [string, Product[]]
+
+export type EntriesList = Entries[]
 
 export interface Menu {
-  [key: string]: menuList
+  [key: string]: MenuList
 }
 
 export interface MenuResponse {

@@ -23,8 +23,8 @@ export const apiSlice = createApi({
     }),
     getPresignedUrl: builder.query({
       query: (args) => {
-        const { user_id, category, menu_name } = args
-        return `/menu/get-presigned-url?user_id=${user_id}&category=${category}&menu_name=${menu_name}`
+        const { user_id, category, menu_name, image_type } = args
+        return `/menu/get-presigned-url?user_id=${user_id}&category=${category}&menu_name=${menu_name}&image_type=${image_type}`
       }
     }),
     signupUser: builder.mutation({
@@ -34,7 +34,14 @@ export const apiSlice = createApi({
         body
       }),
     }),
+    addMenu: builder.mutation({
+      query: (body) => ({
+        url: `/menu/add-menu`,
+        method: 'POST',
+        body
+      }),
+    }),
   })
 })
 
-export const { useGetUserInfoQuery, useGetMenuQuery, useLazyGetPresignedUrlQuery, useSignupUserMutation } = apiSlice
+export const { useGetUserInfoQuery, useGetMenuQuery, useLazyGetPresignedUrlQuery, useSignupUserMutation, useAddMenuMutation } = apiSlice
