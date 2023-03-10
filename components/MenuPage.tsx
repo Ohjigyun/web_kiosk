@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import axios from 'axios'
 import styles from '../styles/MenuPage.module.css'
 import { selectUser } from '../app/slice/userSlice'
@@ -86,10 +87,11 @@ export default function MenuPage(){
                   menuList.map(menu => {
                     return (
                     <div key={category}>
-                    <div>{menu.menu_name}</div>
-                    <div>{menu.menu_price}</div>
-                    <div>{menu.menu_description}</div>
-                  </div>
+                      <img className={styles.menuImage} src={menu.image_url}></img>
+                      <div>{menu.menu_name}</div>
+                      <div>{menu.menu_price}</div>
+                      <div>{menu.menu_description}</div>
+                    </div>
                   )})
               ))}  
             </div> 

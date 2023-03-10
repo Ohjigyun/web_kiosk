@@ -12,6 +12,7 @@ export interface Product {
   menu_name: string
   menu_price: number
   menu_description: string
+  image_url: string
 }
 
 export type MenuList = Product[]

@@ -24,6 +24,11 @@
   flex: 5;
 }
 
+.menuImage {
+  width: 100%;
+  max-height: 10%;
+}
+
 .modal {
   position: absolute;
   top: 40%;
