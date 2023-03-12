@@ -44,4 +44,4 @@ export const apiSlice = createApi({
   })
 })
 
-export const { useGetUserInfoQuery, useGetMenuQuery, useLazyGetPresignedUrlQuery, useSignupUserMutation, useAddMenuMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useSignupUserMutation, useAddMenuMutation } = apiSlice
