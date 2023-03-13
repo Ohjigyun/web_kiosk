@@ -13,6 +13,7 @@ import {
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import userReducer from './slice/userSlice';
 import menuReducer from './slice/menuSlice';
+import uiReducer from './slice/uiSlice';
 import { apiSlice } from './slice/apiSlice';
 
 const createNoopStorage = () => {
@@ -38,12 +39,13 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: [apiSlice.reducerPath, 'menu']
+  blacklist: [apiSlice.reducerPath, 'menu', 'ui']
 }
 
 const rootReducer = combineReducers({
   user: userReducer,
   menu: menuReducer,
+  ui: uiReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 })
 

@@ -6,26 +6,27 @@ import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { useLazyGetMenuQuery } from '../app/slice/apiSlice'
 import type { EntriesList } from '../interfaces'
 import AddMenuModal from "./AddMenuModal"
+import { setAddMenuModalOpen } from '@/app/slice/uiSlice';
 
 export default function MenuPage(){
   const dispatch = useAppDispatch()
   const menu = useAppSelector(state => state.menu.menu)
   const user = useAppSelector(selectUser)
+  const addMenuModalOpen = useAppSelector(state => state.ui.addMenuModalOpen)
   const uid = user?.claims.user_id
 
   const [getMenu] = useLazyGetMenuQuery()
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const [currentCategory, setCurrentCategory] = useState<string>('')
 
   const addMenuClickHandler = () => {
-    setModalOpen(true)
+    dispatch(setAddMenuModalOpen(true))
   }
 
   const backgroundClickHandler = () => {
-    if(modalOpen) {
-      setModalOpen(false)
+    if(addMenuModalOpen) {
+      dispatch(setAddMenuModalOpen(false))
     }
   }
 
@@ -78,22 +79,23 @@ export default function MenuPage(){
         </div>
       </div>
       <div className={styles.menuContainer}>
-        <div className={styles.menuBox}>
-          {menu.map(([category, menuList]) => (
-              menuList.map(menu => {
-                return (
-                <div key={category}>
-                  <img className={styles.menuImage} src={menu.image_url}></img>
-                  <div>{menu.menu_name}</div>
-                  <div>{menu.menu_price}</div>
-                  <div>{menu.menu_description}</div>
-                </div>
-              )})
-          ))}  
-        </div> 
+        {menu.map(([category, menuList]) => (
+            menuList.map(menu => {
+              return (
+                currentCategory === category ? 
+                  <div key={menu.menu_name} className={styles.menuBox}>
+                    <img className={styles.menuImage} src={menu.image_url}></img>
+                    <div>{menu.menu_name}</div>
+                    <div>{menu.menu_price}</div>
+                    <div>{menu.menu_description}</div>
+                  </div>
+                  :
+                  null
+            )})
+        ))}  
         <div className={styles.menuBox} onClick={addMenuClickHandler}>메뉴 추가</div>
       </div>
-      {modalOpen ? 
+      {addMenuModalOpen ? 
         <div onClick={modalClickHandler} className={styles.modal}>
           <AddMenuModal user_id={uid} category={currentCategory} /> 
         </div>

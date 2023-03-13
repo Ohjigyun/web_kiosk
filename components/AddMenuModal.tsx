@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useLazyGetPresignedUrlQuery, useAddMenuMutation } from '../app/slice/apiSlice'
-import type { ModalProps } from '../interfaces'
+import { useLazyGetPresignedUrlQuery, useAddMenuMutation, useLazyGetMenuQuery } from '../app/slice/apiSlice'
+import { setMenu } from '../app/slice/menuSlice';
+import { setAddMenuModalOpen } from '../app/slice/uiSlice';
+import { useAppDispatch } from '../app/hooks'
+import type { ModalProps, EntriesList } from '../interfaces'
 import styles from '../styles/AddMenuModal.module.css'
 
 export default function AddMenuModal( menuInfo: ModalProps ){
@@ -10,8 +13,11 @@ export default function AddMenuModal( menuInfo: ModalProps ){
   const [menuPrice, setMenuPrice] = useState<number>(0)
   const [menuDescription, setMenuDescription] = useState<string>('')
 
+  const dispatch = useAppDispatch()
   const [getPresignedUrl] = useLazyGetPresignedUrlQuery()
   const [addMenu, { isLoading }] = useAddMenuMutation()
+
+  const [getMenu] = useLazyGetMenuQuery()
 
   const uploadImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = (e.currentTarget.files as FileList)[0]
@@ -28,7 +34,9 @@ export default function AddMenuModal( menuInfo: ModalProps ){
   }
 
   const menuPriceChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMenuPrice(parseInt(e.target.value))
+    const price = e.target.value.replace(/[^0-9]/g,'')
+
+    setMenuPrice(parseInt(price))
   }
 
   const menuDescriptionChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,11 +94,26 @@ export default function AddMenuModal( menuInfo: ModalProps ){
     await addMenu(params)
   }
 
+  const getAndSetMenu = async () => {
+    const uid = menuInfo.user_id
+    const response = await getMenu({ uid }).unwrap()
+    const menu: EntriesList = Object.entries(response.menu)
+    
+    dispatch(setMenu(menu))
+  }
+
   const submitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if(!(menuName && menuPrice && menuDescription)) {
+      alert('모든 메뉴 정보를 입력해주세요!')
+      return
+    }
     
     await uploadToS3(e)
     await addMenuHandler(e)
+    await getAndSetMenu()
+    dispatch(setAddMenuModalOpen(false))
   }
 
   return (
@@ -103,7 +126,7 @@ export default function AddMenuModal( menuInfo: ModalProps ){
       <form className={styles.formContainer} onSubmit={submitHandler}>
         <label className={styles.label} htmlFor="inputImage">사진 업로드</label><input id="inputImage" className={styles.file} type="file" name="file" accept="image/*" onChange={uploadImageHandler}></input>
         <input type="text" value={menuName} onChange={menuNameChangeHandler}></input>
-        <input type="text" value={menuPrice} onChange={menuPriceChangeHandler}></input>
+        <input type="number" value={menuPrice} onChange={menuPriceChangeHandler}></input>
         <input type="text" value={menuDescription} onChange={menuDescriptionChangeHandler}></input>
         <button>추가하기</button>
       </form>
