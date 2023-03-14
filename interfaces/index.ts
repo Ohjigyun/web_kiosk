@@ -7,6 +7,10 @@ export interface UserParams {
   user_id: string
 }
 
+export interface TempCategories {
+  [key: string]: string
+}
+
 export interface Product {
   image_key: any
   menu_name: string
@@ -15,9 +19,9 @@ export interface Product {
   image_url: string
 }
 
-export type MenuList = Product[]
+export type MenuList = Product[] | []
 
-export type Entries = [string, Product[]]
+export type Entries = [string, MenuList]
 
 export type EntriesList = Entries[]
 

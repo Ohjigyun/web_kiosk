@@ -4,9 +4,10 @@ import { selectUser } from '../app/slice/userSlice'
 import { setMenu } from '../app/slice/menuSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { useLazyGetMenuQuery } from '../app/slice/apiSlice'
-import type { EntriesList } from '../interfaces'
+import { setAddMenuModalOpen } from '../app/slice/uiSlice';
+import type { EntriesList, TempCategories } from '../interfaces'
 import AddMenuModal from "./AddMenuModal"
-import { setAddMenuModalOpen } from '@/app/slice/uiSlice';
+
 
 export default function MenuPage(){
   const dispatch = useAppDispatch()
@@ -19,6 +20,7 @@ export default function MenuPage(){
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const [currentCategory, setCurrentCategory] = useState<string>('')
+  const [tempCategories, setTempCategories] = useState<TempCategories>({})
 
   const addMenuClickHandler = () => {
     dispatch(setAddMenuModalOpen(true))
@@ -30,11 +32,37 @@ export default function MenuPage(){
     }
   }
 
+  const categoryChangeHandler = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+    const copiedObject = { ...tempCategories }
+    copiedObject[key] = e.target.value
+    
+    setTempCategories(copiedObject)
+  }
+
+  const addCategoryClickHandler = () => {
+    const copiedObject = { ...tempCategories }
+    const lengthOfCategories = Object.keys(copiedObject).length
+    copiedObject[`new_category${lengthOfCategories}`] = ''
+
+    setTempCategories(copiedObject)
+  }
+
   const clickToEditModeOn = () => {
     setIsEditMode(true)
   }
 
   const clickToEditModeOff = () => {
+    const tempCategoryList = Object.entries(tempCategories)
+    for (const [newCategoryKey, newCategoryValue] of tempCategoryList){
+      for (const [category, menus] of menu){
+        if(category === newCategoryValue) {
+          alert('이미 존재하는 카테고리입니다.')
+          return
+        }
+      }
+    }
+    
+    setTempCategories({})
     setIsEditMode(false)
   }
 
@@ -58,21 +86,34 @@ export default function MenuPage(){
     asyncGetMenu()
   }, [])
 
+  console.log(tempCategories)
+
   return (
     <div className={styles.container} onClick={backgroundClickHandler}>
       <div className={styles.category}>
         <div className={styles.categoryHeader}>
           {isEditMode ? 
-            <div className={styles.editCategory} onClick={clickToEditModeOff}>편집 종료</div>
+            <div>
+              <div onClick={addCategoryClickHandler} >카테고리 추가</div>
+              <div className={styles.editCategory} onClick={clickToEditModeOff}>편집 종료</div>
+            </div>
             :
             <div className={styles.editCategory} onClick={clickToEditModeOn}>편집</div>
           }
         </div>
         <div className={styles.categoryBody}>
           {menu.map(([category, menuList]) => {
+            const tempCategoryList = Object.entries(tempCategories)
+            console.log(tempCategoryList)
+
             return (
-              <div key={category} onClick={() => currentCategoryChangeHandler(category)}>
-                {category}
+              <div>
+                {tempCategoryList.map(([tempCategoryKey, tempCategory]) => (
+                  <input type="text" key={tempCategoryKey} value={tempCategories[tempCategoryKey]} onChange={(e) => categoryChangeHandler(e, tempCategoryKey)}/>
+                ))}
+                <div key={category} onClick={() => currentCategoryChangeHandler(category)}>
+                  {category}
+                </div>
               </div>
             )
           })}
