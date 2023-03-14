@@ -11,8 +11,10 @@ export interface TempCategories {
   [key: string]: string
 }
 
+export type TempMenu = [string, string]
+
 export interface Product {
-  image_key: any
+  image_key: string
   menu_name: string
   menu_price: number
   menu_description: string

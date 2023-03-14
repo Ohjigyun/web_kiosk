@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSquareMinus } from '@fortawesome/free-regular-svg-icons'
+import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/MenuPage.module.css'
 import { selectUser } from '../app/slice/userSlice'
-import { setMenu } from '../app/slice/menuSlice';
+import { setMenu, setUuidToDisplayList } from '../app/slice/menuSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks'
-import { useLazyGetMenuQuery } from '../app/slice/apiSlice'
+import { useLazyGetMenuQuery, useLazyGetUuidToDisplayTableQuery, useAddCategoryMutation, useDeleteCategoryMutation } from '../app/slice/apiSlice'
 import { setAddMenuModalOpen } from '../app/slice/uiSlice';
 import type { EntriesList, TempCategories } from '../interfaces'
 import AddMenuModal from "./AddMenuModal"
@@ -11,16 +14,34 @@ import AddMenuModal from "./AddMenuModal"
 
 export default function MenuPage(){
   const dispatch = useAppDispatch()
-  const menu = useAppSelector(state => state.menu.menu)
+  const { menu, uuidToDisplayList } = useAppSelector(state => state.menu)
   const user = useAppSelector(selectUser)
   const addMenuModalOpen = useAppSelector(state => state.ui.addMenuModalOpen)
   const uid = user?.claims.user_id
 
   const [getMenu] = useLazyGetMenuQuery()
+  const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
+  const [addCategory] = useAddCategoryMutation()
+  const [deleteCategory] = useDeleteCategoryMutation()
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
-  const [currentCategory, setCurrentCategory] = useState<string>('')
   const [tempCategories, setTempCategories] = useState<TempCategories>({})
+  const [currentCategory, setCurrentCategory] = useState<string>('')
+
+  const asyncGetMenuAndUuidTable = async () => {
+    const response = await getMenu({ uid }).unwrap()
+    console.log(response)
+    const menu: EntriesList = Object.entries(response.menu)
+    dispatch(setMenu(menu))
+
+    if(menu.length > 0) {
+      const initialCategory = menu[0][0]
+      setCurrentCategory(initialCategory)
+    }
+
+    const { uuid_table } = await getUuidTable({ user_id: uid }).unwrap()
+    dispatch(setUuidToDisplayList(uuid_table))
+  }
 
   const addMenuClickHandler = () => {
     dispatch(setAddMenuModalOpen(true))
@@ -41,17 +62,29 @@ export default function MenuPage(){
 
   const addCategoryClickHandler = () => {
     const copiedObject = { ...tempCategories }
-    const lengthOfCategories = Object.keys(copiedObject).length
-    copiedObject[`new_category${lengthOfCategories}`] = ''
+    copiedObject[`${uuidv4()}`] = ''
 
     setTempCategories(copiedObject)
+  }
+
+  const deleteTempCategoryClickHandler = async (e: React.MouseEvent<SVGSVGElement>, targetCategoryKey: string) => {
+    const copiedObject = { ...tempCategories }
+    delete copiedObject[targetCategoryKey]
+    setTempCategories(copiedObject)
+  }
+
+  const deleteCategoryClickHandler = async (e: React.MouseEvent<SVGSVGElement>, targetCategory: string) => {
+    const categoryInfo = { user_id: uid, category: targetCategory }
+    await deleteCategory(categoryInfo)
+    // re-fetch
+    asyncGetMenuAndUuidTable()
   }
 
   const clickToEditModeOn = () => {
     setIsEditMode(true)
   }
 
-  const clickToEditModeOff = () => {
+  const clickToEditModeOff = async () => {
     const tempCategoryList = Object.entries(tempCategories)
     for (const [newCategoryKey, newCategoryValue] of tempCategoryList){
       for (const [category, menus] of menu){
@@ -61,9 +94,16 @@ export default function MenuPage(){
         }
       }
     }
-    
+    for (const [newCategoryKey, newCategoryValue] of tempCategoryList){
+      if(newCategoryValue !== ''){
+        const categoryInfo = { user_id: uid, category: newCategoryKey, category_display_name: newCategoryValue }
+        await addCategory(categoryInfo)
+      }
+    }
+
     setTempCategories({})
     setIsEditMode(false)
+    asyncGetMenuAndUuidTable()
   }
 
   const modalClickHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -75,18 +115,8 @@ export default function MenuPage(){
   }
 
   useEffect(() => {
-    const asyncGetMenu = async () => {
-      const response = await getMenu({ uid }).unwrap()
-      const menu: EntriesList = Object.entries(response.menu)
-      const initialCategory = menu[0][0]
-      dispatch(setMenu(menu))
-      setCurrentCategory(initialCategory)
-    }
-    
-    asyncGetMenu()
+    asyncGetMenuAndUuidTable()
   }, [])
-
-  console.log(tempCategories)
 
   return (
     <div className={styles.container} onClick={backgroundClickHandler}>
@@ -102,18 +132,22 @@ export default function MenuPage(){
           }
         </div>
         <div className={styles.categoryBody}>
+          {Object.entries(tempCategories).map(([tempCategoryKey, tempCategory]) => (
+            <div key={tempCategoryKey}>
+              <input type="text" key={tempCategoryKey} value={tempCategories[tempCategoryKey]} onChange={(e) => categoryChangeHandler(e, tempCategoryKey)}/>
+              <FontAwesomeIcon className={styles.faSquareMinus} icon={faSquareMinus} size='2x' onClick={(e) => deleteTempCategoryClickHandler(e, tempCategoryKey)}/>
+            </div>
+          ))}
           {menu.map(([category, menuList]) => {
-            const tempCategoryList = Object.entries(tempCategories)
-            console.log(tempCategoryList)
-
+            console.log('uuidToDisplayList:', uuidToDisplayList, 'category:', category)
             return (
-              <div>
-                {tempCategoryList.map(([tempCategoryKey, tempCategory]) => (
-                  <input type="text" key={tempCategoryKey} value={tempCategories[tempCategoryKey]} onChange={(e) => categoryChangeHandler(e, tempCategoryKey)}/>
-                ))}
-                <div key={category} onClick={() => currentCategoryChangeHandler(category)}>
-                  {category}
-                </div>
+              <div key={category} onClick={() => currentCategoryChangeHandler(category)}>
+                <div>{uuidToDisplayList[category]}</div>
+                {isEditMode && uuidToDisplayList[category] !== '' ? 
+                  <FontAwesomeIcon className={styles.faSquareMinus} icon={faSquareMinus} size='2x' onClick={(e) => deleteCategoryClickHandler(e, category)}/>
+                  :
+                  null
+                }
               </div>
             )
           })}
@@ -126,7 +160,7 @@ export default function MenuPage(){
                 currentCategory === category ? 
                   <div key={menu.menu_name} className={styles.menuBox}>
                     <img className={styles.menuImage} src={menu.image_url}></img>
-                    <div>{menu.menu_name}</div>
+                    <div>{uuidToDisplayList[menu.menu_name]}</div>
                     <div>{menu.menu_price}</div>
                     <div>{menu.menu_description}</div>
                   </div>

@@ -27,6 +27,12 @@ export const apiSlice = createApi({
         return `/menu/get-presigned-url?user_id=${user_id}&category=${category}&menu_name=${menu_name}&image_type=${image_type}`
       }
     }),
+    getUuidToDisplayTable: builder.query({
+      query: (args) => {
+        const { user_id } = args
+        return `/menu/uuid-to-display?user_id=${user_id}`
+      }
+    }),
     signupUser: builder.mutation({
       query: (body) => ({
         url: `/user/signup-user`,
@@ -41,7 +47,21 @@ export const apiSlice = createApi({
         body
       }),
     }),
+    addCategory: builder.mutation({
+      query: (body) => ({
+        url: `/menu/add-category`,
+        method: 'POST',
+        body
+      }),
+    }),
+    deleteCategory: builder.mutation({
+      query: (body) => ({
+        url: `/menu/delete-category`,
+        method: 'POST',
+        body
+      }),
+    }),
   })
 })
 
-export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useSignupUserMutation, useAddMenuMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation } = apiSlice

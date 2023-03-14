@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { EntriesList } from '../../interfaces'
+import type { EntriesList, UuidTable } from '../../interfaces'
 
 interface MenuState {
   menu: EntriesList | []
+  uuidToDisplayList: UuidTable
 }
 
 const initialState:MenuState = { 
-  menu: []
+  menu: [],
+  uuidToDisplayList: {}
 }
 
 export const menuSlice = createSlice({
@@ -16,9 +18,12 @@ export const menuSlice = createSlice({
     setMenu: (state, action:PayloadAction<EntriesList>) => {
       state.menu = action.payload
     },
+    setUuidToDisplayList: (state, action:PayloadAction<UuidTable>) => {
+      state.uuidToDisplayList = action.payload
+    },
   }
 });
 
-export const { setMenu } = menuSlice.actions;
+export const { setMenu, setUuidToDisplayList } = menuSlice.actions;
 
 export default menuSlice.reducer;
