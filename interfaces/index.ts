@@ -36,6 +36,10 @@ export interface MenuResponse {
   menu: Menu | {}
 }
 
+export interface UuidTable {
+  [key: string]: string
+}
+
 export interface ModalProps {
   user_id: string,
   category: string
