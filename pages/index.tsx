@@ -32,7 +32,11 @@ export default function Home() {
   }
 
   const orderPageClickHandler = () => {
-    router.push('/')
+    if(!user) {
+      return
+    }
+    
+    router.push(`/guest`)
   }
 
   const adminPageClickHandler = () => {
