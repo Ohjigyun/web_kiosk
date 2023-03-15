@@ -1,24 +1,25 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../app/hooks';
 import { signout, selectUser } from '../../app/slice/userSlice'
+import { setUid, setTableNumber } from '../../app/slice/guestSlice';
 import { persistor } from '../../app/store'
 import { auth, signOut } from '../api/firebase'
 
 
 export default function GuestPage(){
   const user = useAppSelector(selectUser)
+  const uid = user?.claims.user_id
+  const tableNumber = useAppSelector(state => state.guest.tableNumber)
   
   const router = useRouter()
   const dispatch = useDispatch()
-  
-  const [tableNumber, setTableNumber] = useState<number>(0)
 
   const tableNumberChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const price = e.target.value.replace(/[^0-9]/g,'')
     
-    setTableNumber(parseInt(price))
+    dispatch(setTableNumber(parseInt(price)))
   }
 
   const moveGuestPageClickHandler = () => {
@@ -27,8 +28,12 @@ export default function GuestPage(){
     dispatch(signout())
     persistor.purge()
     
-    router.push(`/guest/${user?.claims.user_id}/${tableNumber}`)
+    router.push(`/guest/${uid}/${tableNumber}`)
   }
+
+  useEffect(() => {
+    dispatch(setUid(uid))
+  }, [])
 
   return (
     <div>
