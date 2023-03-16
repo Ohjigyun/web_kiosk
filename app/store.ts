@@ -14,7 +14,6 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import userReducer from './slice/userSlice';
 import menuReducer from './slice/menuSlice';
 import uiReducer from './slice/uiSlice';
-import guestReducer from './slice/guestSlice';
 import { apiSlice } from './slice/apiSlice';
 
 const createNoopStorage = () => {
@@ -47,7 +46,6 @@ const rootReducer = combineReducers({
   user: userReducer,
   menu: menuReducer,
   ui: uiReducer,
-  guest: guestReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 })
 

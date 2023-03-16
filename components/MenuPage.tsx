@@ -139,7 +139,6 @@ export default function MenuPage(){
             </div>
           ))}
           {menu.map(([category, menuList]) => {
-            console.log('uuidToDisplayList:', uuidToDisplayList, 'category:', category)
             return (
               <div key={category} onClick={() => currentCategoryChangeHandler(category)}>
                 <div>{uuidToDisplayList[category]}</div>
