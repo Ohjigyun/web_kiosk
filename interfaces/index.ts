@@ -49,3 +49,18 @@ export interface UrlResponse {
   data?: string
   error?: any;
 }
+
+export interface UrlResponse {
+  data?: string
+  error?: any;
+}
+
+export interface CartItem {
+  menu_name: string
+  menu_price: number
+  menu_quantity: number
+  option_list: string[] | []
+  option_price: number
+}
+
+export type CartList = CartItem[] | []
