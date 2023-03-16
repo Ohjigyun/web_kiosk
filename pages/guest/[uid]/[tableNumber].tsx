@@ -51,6 +51,12 @@ export default function GuestOrderPage(){
       option_price: 0
     }
 
+    for (const { menu_name } of cartList) {
+      if (menu_name === item.menu_name) {
+        return
+      }
+    }
+
     setCartList([...cartList, item])
   }
 
@@ -101,7 +107,7 @@ export default function GuestOrderPage(){
     let currentTotalPrice = 0
 
     for(const { menu_price, menu_quantity } of cartList ) {
-      currentTotalPrice = menu_price * menu_quantity
+      currentTotalPrice += menu_price * menu_quantity
     }
     
     setTotalPrice(currentTotalPrice)
