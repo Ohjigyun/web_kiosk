@@ -35,7 +35,7 @@ export const apiSlice = createApi({
     }),
     getIsOrderAdditional: builder.query({
       query: (args) => {
-        return `/order/is-order-additional?user_id=${args.uid}`
+        return `/order/is-order-additional?user_id=${args.uid}&table_number=${args.tableNumber}`
       }
     }),
     signupUser: builder.mutation({
