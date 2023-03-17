@@ -5,7 +5,7 @@ import { faPlus, faMinus, faSquareXmark } from '@fortawesome/free-solid-svg-icon
 import styles from '../../../styles/GuestOrderPage.module.css'
 import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 import type { EntriesList, UuidTable, CartList, Product } from '../../../interfaces'
-import { useLazyGetMenuQuery, useLazyGetUuidToDisplayTableQuery } from '../../../app/slice/apiSlice'
+import { useLazyGetMenuQuery, useLazyGetUuidToDisplayTableQuery,useLazyGetIsOrderAdditionalQuery , useSendOrderMutation } from '../../../app/slice/apiSlice'
 
 export default function GuestOrderPage(){
   const router = useRouter()
@@ -13,6 +13,8 @@ export default function GuestOrderPage(){
 
   const [getMenu] = useLazyGetMenuQuery()
   const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
+  const [getIsOrderAddtional] = useLazyGetIsOrderAdditionalQuery()
+  const [sendOrder] = useSendOrderMutation()
 
   const [menu, setMenu] = useState<EntriesList>([])
   const [uuidToDisplayList, setUuidToDisplayList] = useState<UuidTable>({})
@@ -97,6 +99,33 @@ export default function GuestOrderPage(){
     setCartList(filteredCartList)
   }
 
+  const sendOrderHandler = async (e: React.MouseEvent<HTMLDivElement>) => {
+    const isAdditional = await getIsOrderAddtional({ uid }).unwrap()
+    
+    if(isAdditional){
+      const additionalOrder = {
+        user_id: uid,
+        table_number: parseInt(tableNumber as string),
+        order_list: [],
+        additional_order: cartList,
+        order_price: totalPrice
+      }
+      console.log('Order is addtional')
+      return
+    }
+
+    const order = {
+      user_id: uid,
+      table_number: parseInt(tableNumber as string),
+      order_list: cartList,
+      additional_order: [],
+      order_price: totalPrice
+    }
+
+    await sendOrder(order)
+    setCartList([])
+  }
+
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -162,7 +191,8 @@ export default function GuestOrderPage(){
             })}
           </div>
           <div className={styles.cartPriceInfo}>
-            total Price : {totalPrice}
+            <div>총 주문 금액: {totalPrice}</div>
+            <div onClick={sendOrderHandler}>주문 전송</div>
           </div>
         </div>
       </div>

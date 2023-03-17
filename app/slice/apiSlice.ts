@@ -33,6 +33,11 @@ export const apiSlice = createApi({
         return `/menu/uuid-to-display?user_id=${user_id}`
       }
     }),
+    getIsOrderAdditional: builder.query({
+      query: (args) => {
+        return `/order/is-order-additional?user_id=${args.uid}`
+      }
+    }),
     signupUser: builder.mutation({
       query: (body) => ({
         url: `/user/signup-user`,
@@ -61,7 +66,14 @@ export const apiSlice = createApi({
         body
       }),
     }),
+    sendOrder: builder.mutation({
+      query: (body) => ({
+        url: `/order/send-order`,
+        method: 'POST',
+        body
+      }),
+    }),
   })
 })
 
-export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation } = apiSlice
