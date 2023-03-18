@@ -73,7 +73,14 @@ export const apiSlice = createApi({
         body
       }),
     }),
+    sendAdditionalOrder: builder.mutation({
+      query: (body) => ({
+        url: `/order/send-additional-order`,
+        method: 'POST',
+        body
+      }),
+    }),
   })
 })
 
-export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice

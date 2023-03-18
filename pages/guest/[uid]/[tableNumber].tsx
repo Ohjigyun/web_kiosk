@@ -5,7 +5,7 @@ import { faPlus, faMinus, faSquareXmark } from '@fortawesome/free-solid-svg-icon
 import styles from '../../../styles/GuestOrderPage.module.css'
 import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 import type { EntriesList, UuidTable, CartList, Product } from '../../../interfaces'
-import { useLazyGetMenuQuery, useLazyGetUuidToDisplayTableQuery,useLazyGetIsOrderAdditionalQuery , useSendOrderMutation } from '../../../app/slice/apiSlice'
+import { useLazyGetMenuQuery, useLazyGetUuidToDisplayTableQuery,useLazyGetIsOrderAdditionalQuery , useSendOrderMutation, useSendAdditionalOrderMutation } from '../../../app/slice/apiSlice'
 
 export default function GuestOrderPage(){
   const router = useRouter()
@@ -15,6 +15,7 @@ export default function GuestOrderPage(){
   const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
   const [getIsOrderAddtional] = useLazyGetIsOrderAdditionalQuery()
   const [sendOrder] = useSendOrderMutation()
+  const [sendAdditionalOrder] = useSendAdditionalOrderMutation()
 
   const [menu, setMenu] = useState<EntriesList>([])
   const [uuidToDisplayList, setUuidToDisplayList] = useState<UuidTable>({})
@@ -110,7 +111,10 @@ export default function GuestOrderPage(){
         additional_order: cartList,
         order_price: totalPrice
       }
-      console.log('Order is addtional')
+      
+      await sendAdditionalOrder(additionalOrder)
+      setCartList([])
+
       return
     }
 
