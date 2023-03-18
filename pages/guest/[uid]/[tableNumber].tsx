@@ -100,7 +100,7 @@ export default function GuestOrderPage(){
   }
 
   const sendOrderHandler = async (e: React.MouseEvent<HTMLDivElement>) => {
-    const isAdditional = await getIsOrderAddtional({ uid }).unwrap()
+    const isAdditional = await getIsOrderAddtional({ uid, tableNumber }).unwrap()
     
     if(isAdditional){
       const additionalOrder = {
