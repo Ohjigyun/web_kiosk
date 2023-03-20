@@ -38,6 +38,11 @@ export const apiSlice = createApi({
         return `/order/is-order-additional?user_id=${args.uid}&table_number=${args.tableNumber}`
       }
     }),
+    getOrders: builder.query({
+      query: (args) => {
+        return `/order/get-orders?user_id=${args.uid}`
+      }
+    }),
     signupUser: builder.mutation({
       query: (body) => ({
         url: `/user/signup-user`,
@@ -83,4 +88,4 @@ export const apiSlice = createApi({
   })
 })
 
-export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useLazyGetOrdersQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice

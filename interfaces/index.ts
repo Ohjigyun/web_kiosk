@@ -64,3 +64,13 @@ export interface CartItem {
 }
 
 export type CartList = CartItem[] | []
+
+export interface Order {
+  user_id: string
+  table_number: number
+  order_list: CartList
+  additional_order: CartList
+  order_price: number
+}
+
+export type Orders = Order[] | []
