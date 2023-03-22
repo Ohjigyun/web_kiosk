@@ -4,9 +4,9 @@ import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { selectUser } from '../app/slice/userSlice'
 import { setUuidToDisplayList } from '../app/slice/menuSlice'
 import styles from '../styles/OrderPage.module.css'
-import type { Orders } from '../interfaces'
+import type { OrderPageProps } from '../interfaces'
 
-export default function OrderPage(){
+export default function OrderPage({ orders, setOrders }: OrderPageProps){
   const dispatch = useAppDispatch()
   const { uuidToDisplayList } = useAppSelector(state => state.menu)
   const user = useAppSelector(selectUser)
@@ -14,8 +14,6 @@ export default function OrderPage(){
 
   const [getOrders] = useLazyGetOrdersQuery()
   const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
-
-  const [orders, setOrders] = useState<Orders>([])
 
   const asyncGetOrdersAndUuidTable = async () => {
     const response = await getOrders({ uid }).unwrap()

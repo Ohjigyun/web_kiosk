@@ -1,3 +1,4 @@
+import React from 'react'
 import firebase from 'firebase/auth'
 
 export type User = firebase.User
@@ -74,3 +75,8 @@ export interface Order {
 }
 
 export type Orders = Order[] | []
+
+export interface OrderPageProps {
+  orders: Orders
+  setOrders: React.Dispatch<React.SetStateAction<Orders>>
+}
