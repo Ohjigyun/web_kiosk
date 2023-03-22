@@ -234,6 +234,7 @@ export default function GuestOrderPage(){
           <div className={styles.cartPriceInfo}>
             <div>총 주문 금액: {totalPrice}</div>
             <div onClick={sendOrderHandler}>주문 전송</div>
+            {isConnected ? null : <button onClick={onConnect}>재연결</button>}
           </div>
         </div>
       </div>

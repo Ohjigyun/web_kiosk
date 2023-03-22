@@ -44,7 +44,6 @@ export default function AdminPage(){
 
   const onOrderStatus = useCallback((dataStr: any) => {
     const data = JSON.parse(dataStr)
-    console.log('data:', data)
     if(data.orders){
       setOrders(data.orders)
     }
@@ -119,7 +118,10 @@ export default function AdminPage(){
     setIsConnected(false)
   }, [currentPage])
 
-  console.log("isConnected:", isConnected)
+  useEffect(() => {
+    console.log("isConnected:", isConnected)
+  },[isConnected])
+  
 
   return (
     <div>
@@ -142,7 +144,11 @@ export default function AdminPage(){
         </div>
         <div className={styles.body}>
           {currentPage === 'menu' ? <MenuPage />
-          : currentPage === 'order' ? <OrderPage orders={orders} setOrders={setOrders}/>
+          : currentPage === 'order' ? 
+            <div>
+              <OrderPage orders={orders} setOrders={setOrders}/>
+              {isConnected ? null : <button onClick={onConnect}>재연결</button>}
+            </div>
           : <ManagementPage />
           }
         </div>
