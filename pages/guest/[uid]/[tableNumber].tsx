@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus, faSquareXmark } from '@fortawesome/free-solid-svg-icons'
@@ -11,6 +11,39 @@ export default function GuestOrderPage(){
   const router = useRouter()
   const { uid, tableNumber} = router.query
 
+  const websocketUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL
+  const socket = useRef<WebSocket | null>(null)
+  const [isConnected, setIsConnected] = useState<boolean>(false)
+
+  const onSocketOpen = useCallback(() => {
+    setIsConnected(true)
+    socket.current?.send(JSON.stringify({ action: 'setTableNumber', user_id: uid, table_number: `${tableNumber}`, isAdmin: false }))
+  }, [])
+
+  const onSocketClose = useCallback(() => {
+    setIsConnected(false)
+  }, [])
+
+  const onConnect = useCallback(() => {
+    if (socket.current?.readyState !== WebSocket.OPEN) {
+      socket.current = new WebSocket(websocketUrl as string);
+      socket.current.addEventListener('open', onSocketOpen);
+      socket.current.addEventListener('close', onSocketClose);
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      socket.current?.close();
+    };
+  }, []);
+
+  const onDisconnect = useCallback(() => {
+    if(isConnected) {
+      socket.current?.close()
+    }
+  }, [isConnected])
+
   const [getMenu] = useLazyGetMenuQuery()
   const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
   const [getIsOrderAddtional] = useLazyGetIsOrderAdditionalQuery()
@@ -22,8 +55,6 @@ export default function GuestOrderPage(){
   const [currentCategory, setCurrentCategory] = useState<string>('')
   const [cartList, setCartList] = useState<CartList>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
-
-  console.log(cartList)
 
   const asyncGetMenuAndUuidTable = async () => {
     const response = await getMenu({ uid }).unwrap()
@@ -114,6 +145,7 @@ export default function GuestOrderPage(){
       
       await sendAdditionalOrder(additionalOrder)
       setCartList([])
+      socket.current?.send(JSON.stringify({ action: 'sendOrder', user_id: uid, table_number: `${tableNumber}`, isAdmin: false }))
 
       return
     }
@@ -127,6 +159,7 @@ export default function GuestOrderPage(){
     }
 
     await sendOrder(order)
+    socket.current?.send(JSON.stringify({ action: 'sendOrder', user_id: uid, table_number: `${tableNumber}`, isAdmin: false }))
     setCartList([])
   }
 
@@ -134,6 +167,8 @@ export default function GuestOrderPage(){
     if (!router.isReady) return;
 
     asyncGetMenuAndUuidTable()
+    // connect websocket
+    onConnect()
   }, [router.isReady])
 
   useEffect(() => {
@@ -145,6 +180,8 @@ export default function GuestOrderPage(){
     
     setTotalPrice(currentTotalPrice)
   }, [cartList])
+
+  console.log('isConnected', isConnected)
 
   return (
     <div className={styles.container}>
