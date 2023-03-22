@@ -123,27 +123,27 @@ export default function MenuPage(){
       <div className={styles.category}>
         <div className={styles.categoryHeader}>
           {isEditMode ? 
-            <div>
-              <div onClick={addCategoryClickHandler} >카테고리 추가</div>
-              <div className={styles.editCategory} onClick={clickToEditModeOff}>편집 종료</div>
+            <div className={styles.categoryInEdit}>
+              <div className={styles.addCategory} onClick={addCategoryClickHandler} >카테고리 추가</div>
+              <div className={styles.exitEdit} onClick={clickToEditModeOff}>편집 종료</div>
             </div>
             :
-            <div className={styles.editCategory} onClick={clickToEditModeOn}>편집</div>
+            <div className={styles.editCategory} onClick={clickToEditModeOn}>카테고리 편집</div>
           }
         </div>
         <div className={styles.categoryBody}>
           {Object.entries(tempCategories).map(([tempCategoryKey, tempCategory]) => (
-            <div key={tempCategoryKey}>
-              <input type="text" key={tempCategoryKey} value={tempCategories[tempCategoryKey]} onChange={(e) => categoryChangeHandler(e, tempCategoryKey)}/>
-              <FontAwesomeIcon className={styles.faSquareMinus} icon={faSquareMinus} size='2x' onClick={(e) => deleteTempCategoryClickHandler(e, tempCategoryKey)}/>
+            <div className={styles.tempCategory} key={tempCategoryKey}>
+              <input className={styles.tempCategoryInput} type="text" key={tempCategoryKey} value={tempCategories[tempCategoryKey]} onChange={(e) => categoryChangeHandler(e, tempCategoryKey)}/>
+              <FontAwesomeIcon className={styles.faSquareMinus} icon={faSquareMinus} onClick={(e) => deleteTempCategoryClickHandler(e, tempCategoryKey)}/>
             </div>
           ))}
           {menu.map(([category, menuList]) => {
             return (
-              <div key={category} onClick={() => currentCategoryChangeHandler(category)}>
+              <div className={`${styles.categoryNames} ${currentCategory === category && !isEditMode ? `${styles.currentCategory}` : ''}`} key={category} onClick={() => currentCategoryChangeHandler(category)}>
                 <div>{uuidToDisplayList[category]}</div>
                 {isEditMode && uuidToDisplayList[category] !== '' ? 
-                  <FontAwesomeIcon className={styles.faSquareMinus} icon={faSquareMinus} size='2x' onClick={(e) => deleteCategoryClickHandler(e, category)}/>
+                  <FontAwesomeIcon className={styles.faSquareMinus} icon={faSquareMinus} onClick={(e) => deleteCategoryClickHandler(e, category)}/>
                   :
                   null
                 }
@@ -153,21 +153,25 @@ export default function MenuPage(){
         </div>
       </div>
       <div className={styles.menuContainer}>
-        {menu.map(([category, menuList]) => (
-            menuList.map(menu => {
-              return (
-                currentCategory === category ? 
-                  <div key={menu.menu_name} className={styles.menuBox}>
-                    <img className={styles.menuImage} src={menu.image_url}></img>
-                    <div>{uuidToDisplayList[menu.menu_name]}</div>
-                    <div>{menu.menu_price}</div>
-                    <div>{menu.menu_description}</div>
-                  </div>
-                  :
-                  null
-            )})
-        ))}  
-        <div className={styles.menuBox} onClick={addMenuClickHandler}>메뉴 추가</div>
+        <div className={styles.menuHeader}>
+          <div className={styles.addMenu} onClick={addMenuClickHandler}> + 메뉴 추가</div>
+        </div>
+        <div className={styles.menuBody}>
+          {menu.map(([category, menuList]) => (
+              menuList.map(menu => {
+                return (
+                  currentCategory === category ? 
+                    <div key={menu.menu_name} className={styles.menuBox}>
+                      <img className={styles.menuImage} src={menu.image_url}></img>
+                      <div className={styles.menuName}>{uuidToDisplayList[menu.menu_name]}</div>
+                      <div className={styles.menuPrice}>{menu.menu_price} 원</div>
+                      <div className={styles.menuDescription}>{menu.menu_description}</div>
+                    </div>
+                    :
+                    null
+              )})
+          ))}  
+        </div>
       </div>
       {addMenuModalOpen ? 
         <div onClick={modalClickHandler} className={styles.modal}>

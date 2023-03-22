@@ -12,34 +12,383 @@
 
 .categoryHeader {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  background-color: #818181;
+  border: 10px solid #ececec;
+}
+
+.categoryHeader:hover {
+  background-color: #ED5684;
 }
 
 .category {
   flex: 1;
-  border-right: 2px solid #d4d4d4;
+  border-right: 10px solid #fff;
+  background-color: #ececec;
+}
+
+.categoryInEdit {
+  display: flex;
+  padding: 20px;
+  color: #fff;
+  font-size: 1.6rem;
+}
+
+.exitEdit {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.addCategory {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.editCategory {
+  padding: 20px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.exitEdit:hover {
+  background-color: #fff;
+  color: #818181;
+  border-radius: 10px;
+}
+
+.addCategory:hover {
+  background-color: #fff;
+  color: #818181;
+  border-radius: 10px;
+}
+
+.categoryBody {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tempCategory {
+  width: 100%;
+  border: 10px solid #ececec;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.tempCategoryInput {
+  font-family: inherit;
+  padding: 3px;
+  font-size: 2rem;
+  max-width: 70%;
+}
+
+.categoryNames {
+  width: 100%;
+  border: 10px solid #ececec;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.categoryNames:hover {
+  cursor: pointer;
+}
+
+.currentCategory {
+  background-color: #ED5684;
+  color: #fff;
+}
+
+.faSquareMinus {
+  margin-left: 20px;
+  padding-top: 5px;
+  cursor: pointer;
 }
 
 .menuContainer {
   flex: 5;
+  background-color: #ececec;
+}
+
+.menuHeader {
+  display: flex;
+  justify-content: center;
+  max-width: 15%;
+  background-color: #ED5684;
+  border-radius: 30px;
+  margin: 10px 10px 10px 42.5%;
+}
+
+.addMenu {
+  padding: 20px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.addMenu:hover {
+  color: black;
+}
+
+.menuBody {
+  display: flex;
+}
+
+.menuBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  width: 15%;
+  min-height: 6rem;
+  padding: 1rem;
+  background-color: #fff;
+  margin: 10px;
 }
 
 .menuImage {
   width: 100%;
-  max-height: 10%;
+  max-height: 60%;
+  border-radius: 50%;
+}
+
+.menuName {
+  margin: 10% 4px 4px 4px;
+  font-size: 2rem;
+}
+
+.menuPrice {
+  margin: 4px;
+  font-size: 1.6rem;
+}
+
+.menuDescription {
+  margin: 4px;
+  font-size: 1.6rem;
 }
 
 .modal {
   position: absolute;
   top: 40%;
   left: 40%;
-  width: 30%;
-  min-height: 30rem;
+  width: 20%;
 }
 
-.menuBox {
-  width: 15%;
-  min-height: 6rem;
-  padding: 1rem;
-  border: 3px solid #d4d4d4;
+
+@media (max-width: 2000px) { 
+  .categoryHeader {
+    border: 7.5px solid #ececec;
+  }
+
+  .categoryInEdit {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    font-size: 1.2rem;
+  }
+  
+  .exitEdit {
+    padding: 7.5px;
+  }
+  
+  .addCategory {
+    padding: 7.5px;
+  }
+  
+  .editCategory {
+    padding: 15px;
+    font-size: 1.5rem;
+  }
+  
+  .exitEdit:hover {
+    border-radius: 7.5px;
+  }
+  
+  .addCategory:hover {
+    border-radius: 7.5px;
+  }
+  
+  .categoryBody {
+    font-size: 1.5rem;
+  }
+  
+  .tempCategory {
+    width: 100%;
+    border: 7.5px solid #ececec;
+    padding: 15px;
+  }
+  
+  .tempCategoryInput {
+    padding: 2px;
+    font-size: 1.5rem;
+    max-width: 70%;
+  }
+  
+  .categoryNames {
+    width: 100%;
+    border: 7.5px solid #ececec;
+    padding: 15px;
+  }
+  
+  .faSquareMinus {
+    margin-left: 15px;
+    padding-top: 5px;
+  }
+  
+  .menuContainer {
+    flex: 5;
+  }
+  
+  .menuHeader {
+    max-width: 25%;
+    border-radius: 20px;
+    margin: 7.5px 7.5px 7.5px 42.5%;
+  }
+  
+  .addMenu {
+    padding: 15px;
+    font-size: 1.5rem;
+  }
+  
+  .menuBox {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 7.5px;
+    width: 15%;
+    min-height: 6rem;
+    padding: 1rem;
+    margin: 7.5px;
+  }
+  
+  .menuImage {
+    width: 100%;
+    max-height: 60%;
+    border-radius: 50%;
+  }
+  
+  .menuName {
+    margin: 10% 3px 3px 3px;
+    font-size: 1.5rem;
+  }
+  
+  .menuPrice {
+    margin: 3px;
+    font-size: 1.2rem;
+  }
+  
+  .menuDescription {
+    margin: 3px;
+    font-size: 1.2rem;
+  }
+}
+
+
+@media (max-width: 800px) { 
+  .categoryHeader {
+    border: 5px solid #ececec;
+  }
+
+  .categoryInEdit {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+  
+  .exitEdit {
+    padding: 5px;
+  }
+  
+  .addCategory {
+    padding: 5px;
+  }
+  
+  .editCategory {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .exitEdit:hover {
+    border-radius: 5px;
+  }
+  
+  .addCategory:hover {
+    border-radius: 5px;
+  }
+  
+  .categoryBody {
+    font-size: 1rem;
+  }
+  
+  .tempCategory {
+    width: 100%;
+    border: 5px solid #ececec;
+    padding: 10px;
+  }
+  
+  .tempCategoryInput {
+    padding: 1px;
+    font-size: 1rem;
+    max-width: 70%;
+  }
+  
+  .categoryNames {
+    width: 100%;
+    border: 5px solid #ececec;
+    padding: 10px;
+  }
+  
+  .faSquareMinus {
+    margin-left: 10px;
+    padding-top: 5px;
+  }
+  
+  .menuContainer {
+    flex: 5;
+  }
+  
+  .menuHeader {
+    max-width: 25%;
+    border-radius: 15px;
+    margin: 5px 5px 5px 42.5%;
+  }
+  
+  .addMenu {
+    padding: 15px;
+    font-size: 1rem;
+  }
+  
+  .menuBox {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    width: 15%;
+    min-height: 6rem;
+    padding: 1rem;
+    margin: 5px;
+  }
+  
+  .menuImage {
+    width: 100%;
+    max-height: 60%;
+    border-radius: 50%;
+  }
+  
+  .menuName {
+    margin: 10% 2px 2px 2px;
+    font-size: 1rem;
+  }
+  
+  .menuPrice {
+    margin: 2px;
+    font-size: 0.8rem;
+  }
+  
+  .menuDescription {
+    margin: 2px;
+    font-size: 0.8rem;
+  }
 }

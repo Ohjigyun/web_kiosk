@@ -136,10 +136,10 @@ export default function AddMenuModal( menuInfo: ModalProps ){
       }
       <form className={styles.formContainer} onSubmit={submitHandler}>
         <label className={styles.label} htmlFor="inputImage">사진 업로드</label><input id="inputImage" className={styles.file} type="file" name="file" accept="image/*" onChange={uploadImageHandler}></input>
-        <input type="text" value={tempMenuName[1]} onChange={menuNameChangeHandler}></input>
-        <input type="number" value={menuPrice} onChange={menuPriceChangeHandler}></input>
-        <input type="text" value={menuDescription} onChange={menuDescriptionChangeHandler}></input>
-        <button>추가하기</button>
+        <input className={styles.input} placeholder="메뉴 이름" type="text" value={tempMenuName[1]} onChange={menuNameChangeHandler}></input>
+        <input className={styles.input} placeholder="메뉴 가격" type="number" value={menuPrice} onChange={menuPriceChangeHandler}></input>
+        <input className={styles.input} placeholder="메뉴 설명" type="text" value={menuDescription} onChange={menuDescriptionChangeHandler}></input>
+        <button className={styles.addButton} >메뉴 추가</button>
       </form>
     </div>
   )
