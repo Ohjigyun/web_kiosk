@@ -28,14 +28,20 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
   }, [])
 
   return (
-    <div>
+    <div className={styles.container}>
       {orders.map(({ table_number, order_list, order_price }) => (
         <div className={styles.orderBox} key={table_number}>
-          <div>table number: {table_number}</div>
-          {order_list.map(({ menu_name, menu_quantity}) => (
-            <div key={menu_name}>{uuidToDisplayList[menu_name]}  {menu_quantity}</div>
-          ))}
-          <div>total price: {order_price}</div>
+          <div className={styles.orderBoxHeader}>
+            테이블 번호: {table_number}
+          </div>
+          <div className={styles.orderBoxBody}>
+            {order_list.map(({ menu_name, menu_quantity}) => (
+              <div className={styles.menus} key={menu_name}>{uuidToDisplayList[menu_name]}  {menu_quantity}</div>
+            ))}
+          </div>
+          <div className={styles.orderBoxFooter}>
+            <div className={styles.totalPrice}>총 요금: {order_price} 원</div>
+          </div>
         </div>
       ))}
     </div>
