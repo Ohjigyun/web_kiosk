@@ -6,7 +6,7 @@ import styles from '../styles/MenuPage.module.css'
 import { selectUser } from '../app/slice/userSlice'
 import { setMenu, setUuidToDisplayList } from '../app/slice/menuSlice';
 import { useAppSelector, useAppDispatch } from '../app/hooks'
-import { useLazyGetMenuQuery, useLazyGetUuidToDisplayTableQuery, useAddCategoryMutation, useDeleteCategoryMutation } from '../app/slice/apiSlice'
+import { useLazyGetMenuQuery, useLazyGetUuidToDisplayTableQuery, useAddCategoryMutation, useDeleteMenuMutation, useDeleteCategoryMutation } from '../app/slice/apiSlice'
 import { setAddMenuModalOpen } from '../app/slice/uiSlice';
 import type { EntriesList, TempCategories } from '../interfaces'
 import AddMenuModal from "./AddMenuModal"
@@ -23,6 +23,7 @@ export default function MenuPage(){
   const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
   const [addCategory] = useAddCategoryMutation()
   const [deleteCategory] = useDeleteCategoryMutation()
+  const [deleteMenu] = useDeleteMenuMutation()
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const [tempCategories, setTempCategories] = useState<TempCategories>({})
@@ -78,6 +79,13 @@ export default function MenuPage(){
     await deleteCategory(categoryInfo)
     // re-fetch
     asyncGetMenuAndUuidTable()
+    // TODO: uuid 테이블에서도 삭제하기
+  }
+
+  const deleteMenuClickHandler = async (e: React.MouseEvent<SVGSVGElement>, category: string, menuName: string) => {
+    await deleteMenu({ user_id: uid, category, menu_name: menuName})
+    asyncGetMenuAndUuidTable()
+    // TODO: uuid 테이블에서도 삭제하기
   }
 
   const clickToEditModeOn = () => {
@@ -162,6 +170,7 @@ export default function MenuPage(){
                 return (
                   currentCategory === category ? 
                     <div key={menu.menu_name} className={styles.menuBox}>
+                      <div className={styles.deleteMenuButton}><FontAwesomeIcon icon={faSquareMinus} onClick={(e) => deleteMenuClickHandler(e, category, menu.menu_name)}/></div>
                       <img className={styles.menuImage} src={menu.image_url}></img>
                       <div className={styles.menuName}>{uuidToDisplayList[menu.menu_name]}</div>
                       <div className={styles.menuPrice}>{menu.menu_price} 원</div>

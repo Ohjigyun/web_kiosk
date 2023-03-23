@@ -179,6 +179,17 @@
   width: 20%;
 }
 
+.deleteMenuButton {
+  width: 100%;
+  font-size: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deleteMenuButton:hover {
+  cursor: pointer;
+}
+
 
 @media (max-width: 2000px) { 
   .categoryHeader {
@@ -283,6 +294,10 @@
   .menuDescription {
     margin: 3px;
     font-size: 1.2rem;
+  }
+
+  .deleteMenuButton {
+    font-size: 1.5rem;
   }
 }
 
@@ -390,5 +405,9 @@
   .menuDescription {
     margin: 2px;
     font-size: 0.8rem;
+  }
+
+  .deleteMenuButton {
+    font-size: 1rem;
   }
 }

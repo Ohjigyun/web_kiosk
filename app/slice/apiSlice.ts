@@ -57,6 +57,13 @@ export const apiSlice = createApi({
         body
       }),
     }),
+    deleteMenu: builder.mutation({
+      query: (body) => ({
+        url: `/menu/delete-menu`,
+        method: 'POST',
+        body
+      }),
+    }),
     addCategory: builder.mutation({
       query: (body) => ({
         url: `/menu/add-category`,
@@ -88,4 +95,4 @@ export const apiSlice = createApi({
   })
 })
 
-export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useLazyGetOrdersQuery, useSignupUserMutation, useAddMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useLazyGetOrdersQuery, useSignupUserMutation, useAddMenuMutation, useDeleteMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice
