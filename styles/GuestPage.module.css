@@ -1,0 +1,174 @@
+.container {
+  width: 100wh;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  padding-bottom: 10px;
+  min-height: 5rem;
+}
+
+.headerRight {
+  margin: 10px 10px 10px auto;
+  display: flex;
+}
+
+.headerSignout {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.home {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.signout {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.homeAndSignout {
+  display: flex;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100wh;
+  height: 100vh;
+  background-color: #ececec;
+}
+
+.centerBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.instruction {
+  font-size: 4rem;
+  padding-bottom: 5%;
+  font-weight: bold;
+}
+
+.tableNumber {
+  padding-bottom: 5%;
+}
+
+.inputTableNumber {
+  border: none;
+  width: 16rem;
+  font-size: 2.5rem;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.enter {
+  width: 100%;
+}
+
+.enterButton {
+  margin-top: 5%;
+  font-family: inherit;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  width: 20rem;
+  padding: 1rem 2.5rem;
+  font-size: 3rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #ED5684;
+  cursor: pointer;
+}
+
+@media (max-width: 2000px) { 
+  .header {
+    font-size: 1.5rem;
+    padding-bottom: 8px;
+    min-height: 3.75rem;
+  }
+  
+  .headerRight {
+    margin: 7.5px 7.5px 7.5px auto;
+  }
+  
+  .headerSignout {
+    margin: 7.5px;
+  }
+  
+  .home {
+    margin: 7.5px;
+  }
+  
+  .signout {
+    margin: 7.5px;
+  }
+  
+  .instruction {
+    font-size: 3rem;
+  }
+  
+  .inputTableNumber {
+    width: 12rem;
+    font-size: 1.9rem;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .enterButton {
+    width: 16rem;
+    padding: 0.75rem 1.9rem;
+    font-size: 2.25rem;
+    border-radius: 15px;
+  }
+} 
+
+
+@media (max-width: 800px) { 
+  .header {
+    font-size: 1rem;
+    padding-bottom: 6px;
+    min-height: 2.5rem;
+  }
+  
+  .headerRight {
+    margin: 5px 5px 5px auto;
+  }
+  
+  .headerSignout {
+    margin: 5px;
+  }
+  
+  .home {
+    margin: 5px;
+  }
+  
+  .signout {
+    margin: 5px;
+  }
+  
+  .instruction {
+    font-size: 2rem;
+  }
+  
+  .inputTableNumber {
+    width: 8rem;
+    font-size: 1.4rem;
+    padding: 6;
+    border-radius: 6;
+  }
+  
+  .enterButton {
+    width: 12rem;
+    padding: 0.75rem 1.4rem;
+    font-size: 1.8rem;
+    border-radius: 10px;
+  }
+} 
