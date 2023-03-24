@@ -6,10 +6,27 @@
 .header {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
-  border-bottom: 2.5px solid #e8e8e8;
+  font-size: 2rem;
   padding-bottom: 10px;
-  margin-bottom: 5px;
+  min-height: 5rem;
+}
+
+.category {
+  width: 15rem;
+  border: 10px solid #fff;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.category:hover {
+  cursor: pointer;
+}
+
+.currentCategory {
+  background-color: #ED5684;
+  color: #fff;
 }
 
 .body {
@@ -21,21 +38,381 @@
 
 .menu {
   flex: 7;
-  border-right: 2.5px solid #e8e8e8;
+  border-right: 16px solid #fff;
+  background-color: #ececec;
+}
+
+.menuList {
+  display: flex;
 }
 
 .cart {
   flex: 3;
+  background-color: #ececec;
+}
+
+.menuBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  width: 15%;
+  min-height: 6rem;
+  padding: 1rem;
+  background-color: #fff;
+  margin: 10px;
 }
 
 .menuImage {
   width: 100%;
-  max-height: 10%;
+  height: 60%;
+  border-radius: 50%;
 }
 
-.menuBox {
-  width: 15%;
-  min-height: 6rem;
-  padding: 1rem;
-  border: 3px solid #d4d4d4;
+.menuName {
+  margin: 10% 4px 4px 4px;
+  font-size: 2rem;
+}
+
+.menuPrice {
+  margin: 4px;
+  font-size: 1.6rem;
+}
+
+.menuDescription {
+  margin: 4px;
+  font-size: 1.6rem;
+}
+
+.cartHeader {
+  display: flex;
+  justify-content: center;
+  background-color: #818181;
+  border: 10px solid #ececec;
+}
+
+.orderList { 
+  padding: 20px;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.cartContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartBody {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cartItem {
+  box-sizing: border-box;
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartItem > div {
+  margin: 0 12px;
+}
+
+.faMinus {
+  margin: 0 12px;
+  color: #ED5684;
+}
+
+.faPlus {
+  margin: 0 12px;
+  color: #ED5684;
+}
+
+.faSquareXmark {
+  color: #ED5684;
+}
+
+.cartPriceInfo {
+  box-sizing: border-box;
+  border: 10px solid #ececec;
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonBox {
+  width: 100%;
+  box-sizing: border-box;
+  border: 10px solid #ececec;
+}
+
+.sendOrder {
+  font-family: inherit;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  padding: 1rem 2.5rem;
+  font-size: 3rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #ED5684;
+  cursor: pointer;
+}
+
+.connectWebsocket {
+  margin-top: 3%;
+  font-family: inherit;
+  color: #fff;
+  width: 100%;
+  padding: 1rem 2.5rem;
+  font-size: 1.6rem;
+  border-radius: 20px;
+  border: none;
+  background-color: red;
+  cursor: pointer;
+}
+
+
+@media (max-width: 2000px) { 
+  .header {
+    font-size: 1.5rem;
+    min-height: 4rem;
+    padding-bottom: 10px;
+  }
+
+  .category {
+    width: 11rem;
+    border: 7.5px solid #fff;
+    padding: 15px;
+  }
+  
+  .menu {
+    border-right: 12px solid #fff;
+  }
+
+  .menuBox {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 7.5px;
+    width: 15%;
+    min-height: 6rem;
+    padding: 1rem;
+    margin: 7.5px;
+  }
+  
+  .menuImage {
+    width: 100%;
+    max-height: 60%;
+    border-radius: 50%;
+  }
+  
+  .menuName {
+    margin: 10% 3px 3px 3px;
+    font-size: 1.5rem;
+  }
+  
+  .menuPrice {
+    margin: 3px;
+    font-size: 1.2rem;
+  }
+  
+  .menuDescription {
+    margin: 3px;
+    font-size: 1.2rem;
+  }
+
+  .cartHeader {
+    border: 7.5px solid #ececec;
+  }
+  
+  .orderList { 
+    padding: 15px;
+    font-size: 1.5rem;
+  }
+
+  .cartBody {
+    font-size: 1.5rem;
+  }
+  
+  .cartItem {
+    padding: 1.5rem;
+    width: 100%;
+  }
+  
+  .cartItem > div {
+    margin: 0 9px;
+  }
+  
+  .faMinus {
+    margin: 0 9px;
+  }
+  
+  .faPlus {
+    margin: 0 9px;
+  }
+  
+  .cartPriceInfo {
+    border: 7.5px solid #ececec;
+    border-radius: 15px;
+    padding: 1.5rem;
+    width: 100%;
+  }
+  
+  .buttonBox {
+    width: 100%;
+    border: 7.5px solid #ececec;
+  }
+  
+  .sendOrder {
+    width: 100%;
+    padding: 0.75rem 1.9rem;;
+    font-size: 2.25rem;
+    border-radius: 15px;
+  }
+  
+  .connectWebsocket {
+    margin-top: 3%;
+    width: 100%;
+    padding: 0.75rem 1.9rem;;
+    font-size: 1.2rem;
+    border-radius: 15px;
+  }
+
+  .faMinus {
+    font-size: 0.75rem;
+  }
+  
+  .faPlus {
+    font-size: 0.75rem;
+  }
+  
+  .faSquareXmark {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 800px) { 
+  .header {
+    font-size: 1rem;
+    min-height: 3rem;
+    padding-bottom: 5px;
+  }
+
+  .category {
+    width: 7.5rem;
+    border: 5px solid #fff;
+    padding: 10px;
+  }
+
+  .menu {
+    border-right: 8px solid #fff;
+  }
+
+  .menuBox {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    width: 15%;
+    min-height: 6rem;
+    padding: 1rem;
+    margin: 5px;
+  }
+  
+  .menuImage {
+    width: 100%;
+    max-height: 60%;
+    border-radius: 50%;
+  }
+  
+  .menuName {
+    margin: 10% 2px 2px 2px;
+    font-size: 0.8rem;
+  }
+  
+  .menuPrice {
+    margin: 2px;
+    font-size: 0.7rem;
+  }
+  
+  .menuDescription {
+    margin: 2px;
+    font-size: 0.7rem;
+  }
+
+
+  .cartHeader {
+    border: 5px solid #ececec;
+  }
+  
+  .orderList { 
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .cartBody {
+    font-size: 0.75rem;
+  }
+  
+  .cartItem {
+    padding: 1rem;
+    width: 100%;
+  }
+  
+  .cartItem > div {
+    margin: 0 4px;
+  }
+  
+  .faMinus {
+    margin: 0 4px;
+  }
+  
+  .faPlus {
+    margin: 0 4px;
+  }
+  
+  .cartPriceInfo {
+    border: 5px solid #ececec;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 100%;
+  }
+  
+  .buttonBox {
+    width: 100%;
+    border: 5px solid #ececec;
+  }
+  
+  .sendOrder {
+    width: 100%;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+  
+  .connectWebsocket {
+    margin-top: 3%;
+    width: 100%;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.6rem;
+    border-radius: 10px;
+  }
+
+  .faMinus {
+    font-size: 0.6rem;
+  }
+  
+  .faPlus {
+    font-size: 0.6rem;
+  }
+  
+  .faSquareXmark {
+    font-size: 0.6rem;
+  }
 }

@@ -131,7 +131,7 @@ export default function GuestOrderPage(){
     setCartList(filteredCartList)
   }
 
-  const sendOrderHandler = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const sendOrderHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const isAdditional = await getIsOrderAddtional({ uid, tableNumber }).unwrap()
     
     if(isAdditional){
@@ -188,7 +188,7 @@ export default function GuestOrderPage(){
       <div className={styles.header}>
         {menu.map(([category, menuList]) => {
           return (
-            <div key={category} onClick={() => currentCategoryChangeHandler(category)}>
+            <div className={`${styles.category} ${currentCategory === category ? styles.currentCategory : ''}`} key={category} onClick={() => currentCategoryChangeHandler(category)}>
               <div>{uuidToDisplayList[category]}</div>
             </div>
           )
@@ -196,45 +196,55 @@ export default function GuestOrderPage(){
       </div>
       <div className={styles.body}>
         <div className={styles.menu}>
-          {menu.map(([category, menuList]) => (
-            menuList.map(menu => {
-              return (
-                currentCategory === category ? 
-                  <div key={menu.menu_name} className={styles.menuBox} onClick={(e) => menuClickHandler(e, menu)}>
-                    <img className={styles.menuImage} src={menu.image_url}></img>
-                    <div>{uuidToDisplayList[menu.menu_name]}</div>
-                    <div>{menu.menu_price}</div>
-                    <div>{menu.menu_description}</div>
-                  </div>
-                  :
-                  null
-              )
-            })
-          ))}  
+          <div className={styles.menuList}>
+            {menu.map(([category, menuList]) => (
+              menuList.map(menu => {
+                return (
+                  currentCategory === category ? 
+                    <div key={menu.menu_name} className={styles.menuBox} onClick={(e) => menuClickHandler(e, menu)}>
+                      <img className={styles.menuImage} src={menu.image_url}></img>
+                      <div className={styles.menuName}>{uuidToDisplayList[menu.menu_name]}</div>
+                      <div className={styles.menuPrice}>{menu.menu_price} 원</div>
+                      <div className={styles.menuDescription}>{menu.menu_description}</div>
+                    </div>
+                    :
+                    null
+                )
+              })
+            ))}  
+          </div>
         </div>
         <div className={styles.cart}>
-          <div className={styles.cartContent}>
-            {cartList.map(({ menu_name, menu_price, menu_quantity }) => {
-              return (
-                <div key={menu_name}>
-                  <div>{uuidToDisplayList[menu_name]}</div>
-                  <div>
-                    <FontAwesomeIcon className={styles.faMinus} icon={faMinus} onClick={(e) => subQuantityHandler(e, menu_name)}/>
-                    {menu_quantity}
-                    <FontAwesomeIcon className={styles.faPlus} icon={faPlus} onClick={(e) => addQuantityHandler(e, menu_name)}/>
-                  </div>
-                  <div>{menu_price}</div>
-                  <div>
-                    <FontAwesomeIcon className={styles.faSquareXmark} icon={faSquareXmark} onClick={(e) => deleteCartItemClickHandler(e, menu_name)}/>
-                  </div>
-                </div>
-              )
-            })}
+          <div className={styles.cartHeader}>
+              <div className={styles.orderList}>주문 내역</div>
           </div>
-          <div className={styles.cartPriceInfo}>
-            <div>총 주문 금액: {totalPrice}</div>
-            <div onClick={sendOrderHandler}>주문 전송</div>
-            {isConnected ? null : <button onClick={onConnect}>재연결</button>}
+          <div className={styles.cartBody}>
+            <div className={styles.cartContent}>
+              {cartList.map(({ menu_name, menu_price, menu_quantity }) => {
+                return (
+                  <div className={styles.cartItem} key={menu_name}>
+                    <div>{uuidToDisplayList[menu_name]}</div>
+                    <div>
+                      <FontAwesomeIcon className={styles.faMinus} icon={faMinus} onClick={(e) => subQuantityHandler(e, menu_name)}/>
+                      {menu_quantity}
+                      <FontAwesomeIcon className={styles.faPlus} icon={faPlus} onClick={(e) => addQuantityHandler(e, menu_name)}/>
+                    </div>
+                    <div className={styles.cartMenuPrice}>{menu_price}</div>
+                    <div className={styles.xMark}>
+                      <FontAwesomeIcon className={styles.faSquareXmark} icon={faSquareXmark} onClick={(e) => deleteCartItemClickHandler(e, menu_name)}/>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            <div className={styles.cartPriceInfo}>
+              <div className={styles.orderPrice}>총 주문 금액 :</div>
+              <div className={styles.orderPriceValue}>{totalPrice} 원</div>
+            </div>
+            <div className={styles.buttonBox}>
+              <button className={styles.sendOrder} onClick={sendOrderHandler}>주문하기</button>
+              {isConnected ? null : <button className={styles.connectWebsocket} onClick={onConnect}>장시간 미 주문시 접속이 해제됩니다. <br /> 해당 버튼이 보이면 꼭 클릭후 주문해주세요.</button>}
+            </div> 
           </div>
         </div>
       </div>
