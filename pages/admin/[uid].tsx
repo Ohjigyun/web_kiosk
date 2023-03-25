@@ -134,7 +134,7 @@ export default function AdminPage(){
         <div className={styles.header}>
           <div className={styles.headerLeft} onClick={menuClickHandler}>메뉴 관리</div>
           <div className={styles.headerLeft} onClick={orderClickHandler}>주문 현황</div>
-          <div className={styles.headerLeft} onClick={managementClickHandler}>매출 관리</div>
+          {/* <div className={styles.headerLeft} onClick={managementClickHandler}>매출 관리</div> */}
           <div className={styles.headerRight}>
             <div className={styles.homeAndSignout}>
               <div className={styles.home} onClick={homeClickHandler}>홈으로</div>
@@ -150,6 +150,13 @@ export default function AdminPage(){
               {isConnected ? null : <button onClick={onConnect}>재연결</button>}
             </div>
           : <ManagementPage />
+          }
+          {currentPage === 'menu' ? <MenuPage />
+          : 
+          <div>
+            <OrderPage orders={orders} setOrders={setOrders}/>
+            {isConnected ? null : <button onClick={onConnect}>재연결</button>}
+          </div>
           }
         </div>
       </div>
