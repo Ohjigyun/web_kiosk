@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useLazyGetOrdersQuery, useLazyGetAssetsPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery } from '../app/slice/apiSlice'
+import { useLazyGetOrdersQuery, useLazyGetAssetsPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useDeleteCompletedOrderMutation } from '../app/slice/apiSlice'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { selectUser } from '../app/slice/userSlice'
 import { setUuidToDisplayList } from '../app/slice/menuSlice'
 import styles from '../styles/OrderPage.module.css'
-import type { OrderPageProps } from '../interfaces'
+import type { OrderPageProps, Orders } from '../interfaces'
 
 export default function OrderPage({ orders, setOrders }: OrderPageProps){
   const dispatch = useAppDispatch()
@@ -14,7 +14,8 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
 
   const [getOrders] = useLazyGetOrdersQuery()
   const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
-  const [GetAssetsPresignedUrl] =  useLazyGetAssetsPresignedUrlQuery()
+  const [GetAssetsPresignedUrl] = useLazyGetAssetsPresignedUrlQuery()
+  const [deleteCompletedOrder] = useDeleteCompletedOrderMutation()
 
   const asyncGetOrdersAndUuidTable = async () => {
     const response = await getOrders({ uid }).unwrap()
@@ -28,6 +29,11 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
     const url = await GetAssetsPresignedUrl({ file_name: 'bell-ring', file_type: 'mp3' }).unwrap()
     const audio = new Audio(url.url)
     audio.play()
+  }
+
+  const deleteOrderCard = async (table_number: number) => {
+    await deleteCompletedOrder({ user_id: uid, table_number })
+    asyncGetOrdersAndUuidTable()
   }
 
   useEffect(() => {
@@ -54,6 +60,7 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
           </div>
           <div className={styles.orderBoxFooter}>
             <div className={styles.totalPrice}>총 요금: {order_price} 원</div>
+            <button onClick={() => deleteOrderCard(table_number)}>계산 완료</button>
           </div>
         </div>
       ))}

@@ -82,6 +82,13 @@ export const apiSlice = createApi({
         body
       }),
     }),
+    deleteCompletedOrder: builder.mutation({
+      query: (body) => ({
+        url: `/order/delete-completed-order`,
+        method: 'POST',
+        body
+      }),
+    }),
     sendOrder: builder.mutation({
       query: (body) => ({
         url: `/order/send-order`,
@@ -99,4 +106,4 @@ export const apiSlice = createApi({
   })
 })
 
-export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetAssetsPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useLazyGetOrdersQuery, useSignupUserMutation, useAddMenuMutation, useDeleteMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetAssetsPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useLazyGetOrdersQuery, useSignupUserMutation, useAddMenuMutation, useDeleteMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useDeleteCompletedOrderMutation , useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice
