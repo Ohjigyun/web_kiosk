@@ -118,11 +118,6 @@ export default function AdminPage(){
     setIsConnected(false)
   }, [currentPage])
 
-  useEffect(() => {
-    console.log("isConnected:", isConnected)
-  },[isConnected])
-  
-
   return (
     <div>
       {isLoading ? 

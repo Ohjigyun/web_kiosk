@@ -26,7 +26,6 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
 
   const playAudio = async () => {
     const url = await GetAssetsPresignedUrl({ file_name: 'bell-ring', file_type: 'mp3' }).unwrap()
-    console.log('url:',url.url)
     const audio = new Audio(url.url)
     audio.play()
   }

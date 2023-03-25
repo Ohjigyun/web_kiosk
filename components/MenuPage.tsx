@@ -31,7 +31,6 @@ export default function MenuPage(){
 
   const asyncGetMenuAndUuidTable = async () => {
     const response = await getMenu({ uid }).unwrap()
-    console.log(response)
     const menu: EntriesList = Object.entries(response.menu)
     dispatch(setMenu(menu))
 

@@ -181,8 +181,6 @@ export default function GuestOrderPage(){
     setTotalPrice(currentTotalPrice)
   }, [cartList])
 
-  console.log('isConnected', isConnected)
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>

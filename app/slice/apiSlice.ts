@@ -11,13 +11,11 @@ export const apiSlice = createApi({
     // The `getPosts` endpoint is a "query" operation that returns data
     getUserInfo: builder.query({
       query: (args) => {
-        console.log(args)
         return `/user/get-user-info?user_id=${args.uid}`
       }
     }),
     getMenu: builder.query({
       query: (args) => {
-        console.log(args)
         return `/menu/get-menu?user_id=${args.uid}`
       }
     }),
