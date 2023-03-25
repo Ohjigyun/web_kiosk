@@ -27,6 +27,12 @@ export const apiSlice = createApi({
         return `/menu/get-presigned-url?user_id=${user_id}&category=${category}&menu_name=${menu_name}&image_type=${image_type}`
       }
     }),
+    getAssetsPresignedUrl: builder.query({
+      query: (args) => {
+        const { file_name, file_type } = args
+        return `/assets/get-presigned-url?file_name=${file_name}&file_type=${file_type}`
+      }
+    }),
     getUuidToDisplayTable: builder.query({
       query: (args) => {
         const { user_id } = args
@@ -95,4 +101,4 @@ export const apiSlice = createApi({
   })
 })
 
-export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useLazyGetOrdersQuery, useSignupUserMutation, useAddMenuMutation, useDeleteMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice
+export const { useGetUserInfoQuery, useLazyGetMenuQuery, useLazyGetPresignedUrlQuery, useLazyGetAssetsPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useLazyGetIsOrderAdditionalQuery, useLazyGetOrdersQuery, useSignupUserMutation, useAddMenuMutation, useDeleteMenuMutation, useAddCategoryMutation, useDeleteCategoryMutation, useSendOrderMutation, useSendAdditionalOrderMutation } = apiSlice
