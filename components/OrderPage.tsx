@@ -47,7 +47,7 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
           </div>
           <div className={styles.orderBoxFooter}>
             <div className={styles.totalPrice}>총 요금: {order_price} 원</div>
-            <button onClick={() => deleteOrderCard(table_number)}>계산 완료</button>
+            <button className={styles.deleteOrderButton} onClick={() => deleteOrderCard(table_number)}>계산 완료</button>
           </div>
         </div>
       ))}
