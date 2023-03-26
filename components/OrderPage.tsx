@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useLazyGetOrdersQuery, useLazyGetAssetsPresignedUrlQuery, useLazyGetUuidToDisplayTableQuery, useDeleteCompletedOrderMutation } from '../app/slice/apiSlice'
+import { useLazyGetOrdersQuery, useLazyGetUuidToDisplayTableQuery, useDeleteCompletedOrderMutation } from '../app/slice/apiSlice'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { selectUser } from '../app/slice/userSlice'
 import { setUuidToDisplayList } from '../app/slice/menuSlice'
@@ -14,7 +14,6 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
 
   const [getOrders] = useLazyGetOrdersQuery()
   const [getUuidTable] = useLazyGetUuidToDisplayTableQuery()
-  const [GetAssetsPresignedUrl] = useLazyGetAssetsPresignedUrlQuery()
   const [deleteCompletedOrder] = useDeleteCompletedOrderMutation()
 
   const asyncGetOrdersAndUuidTable = async () => {
@@ -25,12 +24,6 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
     dispatch(setUuidToDisplayList(uuid_table))
   }
 
-  const playAudio = async () => {
-    const url = await GetAssetsPresignedUrl({ file_name: 'bell-ring', file_type: 'mp3' }).unwrap()
-    const audio = new Audio(url.url)
-    audio.play()
-  }
-
   const deleteOrderCard = async (table_number: number) => {
     await deleteCompletedOrder({ user_id: uid, table_number })
     asyncGetOrdersAndUuidTable()
@@ -39,12 +32,6 @@ export default function OrderPage({ orders, setOrders }: OrderPageProps){
   useEffect(() => {
     asyncGetOrdersAndUuidTable()
   }, [])
-
-  useEffect(() => {
-    if(orders.length > 0){
-      playAudio()
-    }
-  }, [orders])
 
   return (
     <div className={styles.container}>

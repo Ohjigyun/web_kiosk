@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { auth, signOut } from '../api/firebase'
-import { useGetUserInfoQuery } from '../../app/slice/apiSlice'
+import { useGetUserInfoQuery, useLazyGetAssetsPresignedUrlQuery } from '../../app/slice/apiSlice'
 import { selectUser } from '../../app/slice/userSlice'
 import { persistor } from '../../app/store'
 import { useAppSelector } from '../../app/hooks'
@@ -32,6 +32,14 @@ export default function AdminPage(){
     isError,
     error 
   } = useGetUserInfoQuery({ uid })
+
+  const [GetAssetsPresignedUrl] = useLazyGetAssetsPresignedUrlQuery()
+
+  const playAudio = async () => {
+    const url = await GetAssetsPresignedUrl({ file_name: 'bell-ring', file_type: 'mp3' }).unwrap()
+    const audio = new Audio(url.url)
+    audio.play()
+  }
   
   const onSocketOpen = useCallback(() => {
     setIsConnected(true)
@@ -46,6 +54,7 @@ export default function AdminPage(){
     const data = JSON.parse(dataStr)
     if(data.orders){
       setOrders(data.orders)
+      playAudio()
     }
   }, [])
 
@@ -117,6 +126,13 @@ export default function AdminPage(){
     onDisconnect()
     setIsConnected(false)
   }, [currentPage])
+
+  useEffect(() => {
+    if(!isConnected && currentPage === 'order') {
+      onConnect()
+      setIsConnected(true)
+    }
+  }, [isConnected])
 
   return (
     <div>
