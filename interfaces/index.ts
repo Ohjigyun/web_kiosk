@@ -80,3 +80,7 @@ export interface OrderPageProps {
   orders: Orders
   setOrders: React.Dispatch<React.SetStateAction<Orders>>
 }
+
+export interface Index {
+  [key: string]: string
+}

@@ -1,0 +1,174 @@
+.container {
+  width: 100wh;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  padding-bottom: 10px;
+  min-height: 5rem;
+}
+
+.headerRight {
+  margin: 10px 10px 10px auto;
+  display: flex;
+}
+
+.headerSignout {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.home {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.signout {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.homeAndSignout {
+  display: flex;
+}
+
+.body {
+  display: flex;
+  width: 100wh;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.bodyLeft {
+  flex: 2;
+  border-right: 12px solid #fff;
+}
+
+.bodyRight {
+  flex: 8;
+}
+
+.index {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.indexItem {
+  width: 100%;
+  border: 10px solid #f5f5f5;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.indexItem:hover {
+  cursor: pointer;
+}
+
+.currentIndexItem {
+  background-color: #ED5684;
+  color: #fff;
+}
+
+@media (max-width: 2000px) { 
+  .header {
+    font-size: 1.5rem;
+    padding-bottom: 8px;
+    min-height: 3.75rem;
+  }
+  
+  .headerRight {
+    margin: 7.5px 7.5px 7.5px auto;
+  }
+  
+  .headerSignout {
+    margin: 7.5px;
+  }
+  
+  .home {
+    margin: 7.5px;
+  }
+  
+  .signout {
+    margin: 7.5px;
+  }
+
+  .bodyLeft {
+    border-right: 9px solid #fff;
+  }
+
+  .index {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 800px) { 
+  .header {
+    font-size: 1rem;
+    padding-bottom: 6px;
+    min-height: 2.5rem;
+  }
+  
+  .headerRight {
+    margin: 5px 5px 5px auto;
+  }
+  
+  .headerSignout {
+    margin: 5px;
+  }
+  
+  .home {
+    margin: 5px;
+  }
+  
+  .signout {
+    margin: 5px;
+  }
+
+  .bodyLeft {
+    border-right: 6px solid #fff;
+  }
+
+  .index {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) { 
+  .header {
+    font-size: 0.75rem;
+    padding-bottom: 4.5px;
+    min-height: 2rem;
+  }
+  
+  .headerRight {
+    margin: 4px 4px 4px auto;
+  }
+  
+  .headerSignout {
+    margin: 4px;
+  }
+  
+  .home {
+    margin: 4px;
+  }
+  
+  .signout {
+    margin: 4px;
+  }
+
+  .bodyLeft {
+    border-right: 5px solid #fff;
+  }
+
+  .index {
+    font-size: 0.75rem;
+  }
+}
