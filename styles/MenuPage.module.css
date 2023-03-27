@@ -73,6 +73,7 @@
 
 .tempCategory {
   width: 100%;
+  display: flex;
   border: 10px solid #ececec;
   box-sizing: border-box;
   padding: 20px;
@@ -105,8 +106,9 @@
 
 .faSquareMinus {
   margin-left: 20px;
-  padding-top: 5px;
+  padding-top: 8px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .menuContainer {
@@ -236,7 +238,7 @@
   
   .tempCategoryInput {
     padding: 2px;
-    font-size: 1.5rem;
+    font-size: 1rem;
     max-width: 70%;
   }
   
@@ -248,7 +250,7 @@
   
   .faSquareMinus {
     margin-left: 15px;
-    padding-top: 5px;
+    padding-top: 2px;
   }
   
   .menuContainer {
@@ -347,7 +349,7 @@
   
   .tempCategoryInput {
     padding: 1px;
-    font-size: 1rem;
+    font-size: 0.7rem;
     max-width: 70%;
   }
   
