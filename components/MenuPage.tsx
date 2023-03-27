@@ -44,6 +44,10 @@ export default function MenuPage(){
   }
 
   const addMenuClickHandler = () => {
+    if(!currentCategory) {
+      alert('카테고리를 먼저 추가해주세요!')
+      return
+    }
     dispatch(setAddMenuModalOpen(true))
   }
 
