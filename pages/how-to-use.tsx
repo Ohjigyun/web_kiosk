@@ -45,7 +45,7 @@ export default function HowToUse() {
         <div className={styles.bodyLeft}>
           <div className={styles.index}>
             {Object.keys(indexList).map(index => (
-              <div className={`${styles.indexItem} ${currentIndex === index ? styles.currentIndexItem : ''}`} onClick={() => indexClickHandler(index)}>{index}. {indexList[index]}</div>
+              <div key={index} className={`${styles.indexItem} ${currentIndex === index ? styles.currentIndexItem : ''}`} onClick={() => indexClickHandler(index)}>{index}. {indexList[index]}</div>
             ))}
           </div>
         </div>
