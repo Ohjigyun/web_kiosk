@@ -11,9 +11,8 @@ export default function HowToUse() {
   const indexList: Index = {
     1: '회원 가입',
     2: '메뉴 커스텀',
-    3: '테이블 입력',
-    4: '주문하기',
-    5: '계산하기',
+    3: '주문하기',
+    4: '계산하기',
   }
 
   const [currentIndex, setCurrentIndex] = useState<string>('1')
