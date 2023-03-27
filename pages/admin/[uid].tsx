@@ -156,10 +156,7 @@ export default function AdminPage(){
         <div className={styles.body}>
           {currentPage === 'menu' ? <MenuPage />
           : 
-          <div>
-            <OrderPage orders={orders} setOrders={setOrders}/>
-            {/* {isConnected ? null : <button onClick={onConnect}>재연결</button>} */}
-          </div>
+          <OrderPage orders={orders} setOrders={setOrders}/>
           }
         </div>
       </div>
