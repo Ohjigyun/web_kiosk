@@ -1,0 +1,24 @@
+.container {
+  width: 100wh;
+  height: 100vh;
+  margin: 20px;
+}
+
+
+@media (max-width: 2000px) { 
+  .container {
+    margin: 15px;
+  }
+}
+
+@media (max-width: 800px) { 
+  .container {
+    margin: 10px;
+  }
+}
+
+@media (max-width: 400px) { 
+  .container {
+    margin: 5px;
+  }
+}

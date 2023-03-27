@@ -3,7 +3,12 @@ import { useRouter } from 'next/router'
 import { persistor } from '../app/store'
 import { auth, signOut } from './api/firebase'
 import type { Index } from '../interfaces'
+import Signup from '../components/HowToUse/Signup'
+import Order from '../components/HowToUse/Order'
+import BillPay from '../components/HowToUse/BillPay'
+import CustomMenu from '../components/HowToUse/CustomMenu'
 import styles from '../styles/HowToUse.module.css'
+
 
 export default function HowToUse() {
   const router = useRouter()
@@ -49,7 +54,10 @@ export default function HowToUse() {
           </div>
         </div>
         <div className={styles.bodyRight}>
-          
+          {currentIndex === '2' ? <CustomMenu />
+          : currentIndex === '3' ? <Order />
+          : currentIndex === '4' ? <BillPay />
+          : <Signup />}
         </div>
       </div>
     </div>
