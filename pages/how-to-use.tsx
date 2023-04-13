@@ -26,11 +26,6 @@ export default function HowToUse() {
     router.push('/')
   }
 
-  const signoutClickHandler = () => {
-    signOut(auth)
-    persistor.purge()
-  }
-
   const indexClickHandler = (index: string) => {
     setCurrentIndex(index)
   }
@@ -41,7 +36,6 @@ export default function HowToUse() {
         <div className={styles.headerRight}>
           <div className={styles.homeAndSignout}>
             <div className={styles.home} onClick={homeClickHandler}>홈으로</div>
-            <div className={styles.signout} onClick={signoutClickHandler}>로그아웃</div>
           </div>
         </div>
       </div>
